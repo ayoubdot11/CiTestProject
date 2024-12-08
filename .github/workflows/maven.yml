@@ -1,0 +1,46 @@
+name: Maven CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  maven-lifecycle:
+    name: Maven Lifecycle
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Set up Java
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17' # Change this if you're using another version
+          distribution: 'temurin'
+
+      # 3. Validate phase
+      - name: Maven validate
+        run: mvn validate
+
+      # 4. Compile phase
+      - name: Maven compile
+        run: mvn compile
+
+      # 5. Test phase
+      - name: Maven test
+        run: mvn test
+
+      # 6. Package phase
+      - name: Maven package
+        run: mvn package
+
+      # 7. Install phase
+      - name: Maven install
+        run: mvn install
